@@ -14,23 +14,23 @@ on:
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
-        default: 'https://github.com/ZorEl212/twrp_oppo_cph2349.git'
+        default: 'https://github.com/ZorEl212/android_device_xiaomi_ginkgo.git'
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
         required: true
-        default: 'twrp-11'
+        default: 'android-12.1'
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/oppo/cph2349'
+        default: 'device/xiaomi/ginkgo'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'cph2349'
+        default: 'ginkgo'
       MAKEFILE_NAME:
         description: 'MAKEFILE_NAME'
         required: true
-        default: 'twrp_cph2349'
+        default: 'twrp_ginkgo'
       BUILD_TARGET:
         description: 'BUILD_TARGET'
         required: true
