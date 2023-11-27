@@ -2,6 +2,7 @@ language: shell
 
 env:
   global:
+    - NAME='zorel'
     - MANIFEST_URL='git@github.com:minimal-manifest-twrp/platform_manifest_twrp_aosp.git'
     - MANIFEST_BRANCH='twrp-12.1'
     - DEVICE_TREE_URL='https://github.com/ZorEl212/android_device_xiaomi_ginkgo.git'
