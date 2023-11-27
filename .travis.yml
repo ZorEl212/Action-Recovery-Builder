@@ -32,18 +32,10 @@ jobs:
         - repo sync -j$(nproc --all) -f --force-sync
         - ls -al
         - git clone https://github.com/ZorEl212/twrp_xiaomi_ginkgo.git  -b android-12.1 device/xiaomi/ginkgo
-
-    - name: Check Build Branch
-      run: |
-        PATH=~/bin:$PATH
-        source build/envsetup.sh
-        repopick 5405 5540
-
-    - name: Building recovery
-      run: |
-        PATH=~/bin:$PATH
-        source build/envsetup.sh
-        lunch $MAKEFILE_NAME-eng
-        export ALLOW_MISSING_DEPENDENCIES=true
-        make clean
-        make $BUILD_TARGET -j$(nproc --all)
+        - PATH=~/bin:$PATH
+        - source build/envsetup.sh
+        - repopick 5405 5540
+        - lunch twrp_ginkgo-eng
+        - export ALLOW_MISSING_DEPENDENCIES=true
+        - make clean
+       -  make $BUILD_TARGET -j$(nproc --all)
