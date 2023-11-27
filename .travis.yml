@@ -38,4 +38,4 @@ jobs:
         - lunch twrp_ginkgo-eng
         - export ALLOW_MISSING_DEPENDENCIES=true
         - make clean
-       -  make $BUILD_TARGET -j$(nproc --all)
+        -  make $BUILD_TARGET -j$(nproc --all)
