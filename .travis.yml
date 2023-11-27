@@ -37,5 +37,4 @@ jobs:
         - repopick 5405 5540
         - lunch twrp_ginkgo-eng
         - export ALLOW_MISSING_DEPENDENCIES=true
-        - make clean
-        -  make $BUILD_TARGET -j$(nproc --all)
+        -  make recoveryimage -j$(nproc --all)
