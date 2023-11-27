@@ -25,12 +25,12 @@ jobs:
         - export PATH=~/bin:$PATH
         - mkdir workspace
         - cd workspace
-        - git config --global user.name "Captain Throwback"
-        - git config --global user.email "captainthrowback@hotmail.com"
-        - repo init --depth=1 -u 'git@github.com:minimal-manifest-twrp/platform_manifest_twrp_aosp.git' -b android-12.1
+        - git config --global user.name "ZorEl212"
+        - git config --global user.email "yabsirad212@proton.me"
+        - repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1
         - repo sync -j$(nproc --all) -f --force-sync
         - ls -al
-        - git clone https://github.com/ZorEl212/android_device_xiaomi_ginkgo.git  -b android-12.1 device/xiaomi/ginkgo
+        - git clone https://github.com/ZorEl212/twrp_xiaomi_ginkgo.git  -b android-12.1 device/xiaomi/ginkgo
 
     - name: Check Build Branch
       run: |
