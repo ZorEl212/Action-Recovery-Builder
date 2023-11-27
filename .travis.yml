@@ -30,7 +30,7 @@ jobs:
         - repo init --depth=1 -u 'git@github.com:minimal-manifest-twrp/platform_manifest_twrp_aosp.git' -b android-12.1
         - repo sync -j$(nproc --all) -f --force-sync
         - ls -al
-        - git clone $DEVICE_TREE_URL -b $DEVICE_TREE_BRANCH ./$DEVICE_PATH
+        - git clone https://github.com/ZorEl212/android_device_xiaomi_ginkgo.git  -b android-12.1 device/xiaomi/ginkgo
 
     - name: Check Build Branch
       run: |

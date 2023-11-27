@@ -13,4 +13,12 @@ export PATH=~/bin:$PATH
 # Additional installations or configurations can be added here
 # ...
 
+# Check if Python 3 is installed
+if command -v python3 &> /dev/null; then
+    # Set Python 3 as the default
+    sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+    echo "Default Python version set to Python 3."
+else
+    echo "Python 3 is not installed. Please install Python 3 first."
+fi
 echo "Dependencies installed successfully."
