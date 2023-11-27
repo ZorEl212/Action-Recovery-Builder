@@ -1,73 +1,7 @@
+language: bash
 
-language: shell
+script:
+  - uname -a
+  - cat /etc/os-release
+  - echo "Hello, world!"
 
-env:
-  global:
-    - MANIFEST_URL='git@github.com:minimal-manifest-twrp/platform_manifest_twrp_aosp.git'
-    - MANIFEST_BRANCH='twrp-12.1'
-    - DEVICE_TREE_URL='https://github.com/ZorEl212/android_device_xiaomi_ginkgo.git'
-    - DEVICE_TREE_BRANCH='android-12.1'
-    - DEVICE_PATH='device/xiaomi/ginkgo'
-    - DEVICE_NAME='ginkgo'
-    - MAKEFILE_NAME='twrp_ginkgo'
-    - BUILD_TARGET='recovery'
-
-jobs:
-  include:
-    - name: Build
-      if: env(github.event.repository.owner.id) == env(github.event.sender.id)
-      os: linux
-      dist: bionic
-      script:
-        - sudo apt update
-        - sudo apt -y upgrade
-        - sudo apt -y install git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip jq bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libssl-dev libwxgtk3.0-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev imagemagick libbz2-dev libssl-dev lzma ncftp bash-completion python qemu-user-static
-        - mkdir ~/bin
-        - curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
-        - chmod a+x ~/bin/repo
-        - export PATH=~/bin:$PATH
-        - mkdir workspace
-        - cd workspace
-        - git config --global user.name "Captain Throwback"
-        - git config --global user.email "captainthrowback@hotmail.com"
-        - repo init --depth=1 -u $MANIFEST_URL -b $MANIFEST_BRANCH
-        - repo sync -j$(nproc --all) -f --force-sync
-        - ls -al
-        cd ${{ steps.pwd.outputs.pwd }}
-        git clone ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
-        
-    - name: Set Swap Space
-      uses: pierotofy/set-swap-space@master
-      with:
-        swap-size-gb: 12
-
-    - name: Check Build Branch
-      if: ${{ github.event.inputs.MANIFEST_BRANCH == 'twrp-12.1' }}
-      run: |
-        PATH=~/bin:$PATH
-        cd ${{ steps.pwd.outputs.pwd }}
-        source build/envsetup.sh
-        repopick 5405 5540
-
-    - name: Building recovery
-      run: |
-        PATH=~/bin:$PATH
-        cd ${{ steps.pwd.outputs.pwd }}
-        source build/envsetup.sh
-        lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng
-        export ALLOW_MISSING_DEPENDENCIES=true
-        make clean
-        make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)        
-      
-    - name: Upload to Release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.BUILD_TARGET }}.img
-        name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
-        tag_name: ${{ github.run_id }}
-        body: |
-          Manifest: ${{ github.event.inputs.MANIFEST_BRANCH }}
-          Device: ${{ github.event.inputs.DEVICE_NAME }}
-          Target: ${{ github.event.inputs.BUILD_TARGET }}.img
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
