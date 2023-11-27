@@ -26,9 +26,9 @@ jobs:
         - mkdir workspace
         - cd workspace
         - git config --global user.name "ZorEl212"
-        - echo -e "ZorEl212 <yabsirad212@proton.me>\n\ny" | repo init --config-email
+        - git config --global user.email"yabsirad212@proton.me"
 
-        - repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1
+        - echo -e "y\n" | repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1
         - repo sync -j$(nproc --all) -f --force-sync
         - ls -al
         - git clone https://github.com/ZorEl212/twrp_xiaomi_ginkgo.git  -b android-12.1 device/xiaomi/ginkgo
